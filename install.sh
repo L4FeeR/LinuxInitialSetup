@@ -4,10 +4,10 @@
 
 
 #basic pkg
-bpkg=("htop" "sdfsfs" "neofetch" "gh" "git" "wget" "curl" "openssh" "tmate" "tmux" "python3")
+bpkg=("htop" "neofetch" "gh" "git" "wget" "curl" "nmtui" "tmate" "tmux" "python3")
 
 #kernelpkg
-kpkg=("bc" "flex" "make" "clang" "build-essential")
+kpkg=("bc" "flex" "make" "clang")
 
 #colors
 red="\033[1;31m"
@@ -26,13 +26,50 @@ bold="\033[1;1m"
 
 #echo -e "$red red $blue blue $green green $yellow yellow $reset reset $blink blink $reset $us us $bold bold"
 
+function yn () {
+	if [ $1 -eq "y" ];then
+		return 1
+	else
+		return 0
+	fi
+}
+function additional_tools () {
+	echo -e "$reset Install$blue Ollama$reset..."
+	curl -fsSL https://ollama.com/install.sh | sh
+	echo -e "$reset Install$blue ZED$reset..."
+	curl -f https://zed.dev/install.sh | sh 
+	echo -e "$reset Install$blue Ollama$reset..."
+		
+
+}
+
+
+
+
+
+shells=("fish" "zsh" "ksh")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function pkgm () {
         if [ $(command -v apt) ];then
-                apt install $1 -y
+                apt install $1 -y > /dev/null 2>&1
         elif [ $(command -v pacman) ];then
-                pacman -Sy $1
+                pacman -Sy $1 > //dev/null 2>&1
         elif [ $(command -v dnf) ];then
-                dnf -s $1
+                dnf install $1 > /dev/null 2>&1
         else
                 echo -e "$blue[$red-$blue]$yellow Cannot Find Package Manager!"
         fi
@@ -42,30 +79,37 @@ for pkg in ${cpkg[@]}; do
   f=`command -v $pkg`
   echo -en "$bold $pkg\t\t $purple ---->\t\t"
   if [ $f ];then
-	  echo "$green Found!"
+	  echo -e "$green Found!"
   else
 	  echo -e "$red Not Found!"
 	  pkgm $pkg
-  fi
+	  if [ `command -v $pkg` ];then
+		  echo -e "\t\t$green Installed."
+		else
+			echo -e "\t\t$red Failed TO Install"
+	  fi
+	  fi
 	done
 }
 
 install_pkg
 
 function main() {
-echo "		Installer Menu"
+	sleep 1.5
+clear
+echo -e "	$us	Installer Menu"
+echo -e "$reset"
+echo -e "$brown		1. $purple Base Packages"
+echo -e "$brown		2. $purple Kernel Build Packages"
+echo -e "$brown		3. $purple Additional Development Tools."
+#echo -e "$brown		4. $purple Add shortcuts"
+echo -e "$brown		4. $purple Install All Shells"
+echo -e "$brown		o  $purple Exit"
 echo ""
-echo "		1. Base Packages"
-echo "		2. Kernel Build Packages"
-echo "		3. Ollama -The Offline AI"
-echo "		4. Add shortcuts"
-echo "		5. Install All Shells"
-echo "		o  Exit"
-echo ""
-read -p "[+]Enter your choice : " choice
+echo -ne "$green[$yellow+$green] $cyan Enter your choice : "
+read choice
 
-
-if [ $choice -eq 1 ];then
+if [ $choice == 1 ];then
 	cpkg=${bpkg[@]}
 	install_pkg
 	main
@@ -74,8 +118,14 @@ elif [ $choice -eq 2 ];then
 	install_pkg
 	main
 elif [ $choice -eq 3 ];then
-	cd $HOME && ls
+	cd $HOME
+	additional_tools
 	main
+elif [ $choice -eq 4 ];then
+	cpkg=${shells[@]}
+	install_pkg
+	main
+
 else
 	echo "[-]Exiting from the script!"
 	return 0
@@ -90,13 +140,14 @@ for pkg in ${cpkg[@]}; do
   f=`command -v $pkg`
   echo -en "$pkg\t\t---->\t\t"
   if [ $f ];then
-	  echo "Found!"
+	  echo -e "$green Found!"
   else
-	  echo "Not Found!"
+	  echo -e "$red Not Found!"
   fi
   sleep 1
 	done
 }
 
 }
+
 main
