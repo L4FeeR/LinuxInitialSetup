@@ -50,7 +50,15 @@ function additional_tools () {
 	bash -c flutter --disable-analytics
 	bash -c flutter precache
 	sudo snap install android-studio --classic
-
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Installing $green Telegram-Desktop $reset..."
+	sudo snap install telegram-desktop
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Installing $green Steam $reset..."
+	sudo snap install steam
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Installing $green VSCode $reset..."
+	sudo snap install code --classic
 	
 }
 
