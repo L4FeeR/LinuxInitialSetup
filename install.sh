@@ -122,6 +122,7 @@ echo -e "$brown		2. $purple Kernel Build Packages"
 echo -e "$brown		3. $purple Additional Development Tools."
 #echo -e "$brown		4. $purple Add shortcuts"
 echo -e "$brown		4. $purple Install All Shells"
+echo -e "$brown		5. $purple Zorin OS Setup"
 echo -e "$brown		o  $purple Exit"
 echo ""
 echo -ne "$green[$yellow+$green] $cyan Enter your choice : "
@@ -143,7 +144,21 @@ elif [ $choice -eq 4 ];then
 	cpkg=${shells[@]}
 	install_pkg
 	main
+elif [ $choice -eq 5 ];then
+	sudo apt update
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Updating $Repository $reset..."
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Upgrading $green System $reset..."
+	sudo apt upgrade -y
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Adding $green Repository $reset..."
+	sudo add-apt-repository ppa:kelebek333/kablosuz
+	sudo apt update
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Installing $green RTL8188EUS Driver$reset..."
 
+	sudo apt install rtl8188eus-dkms
 else
 	echo "[-]Exiting from the script!"
 	return 0
