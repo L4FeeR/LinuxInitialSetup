@@ -4,10 +4,10 @@
 
 
 #basic pkg
-bpkg=("htop" "neofetch" "gh" "git" "wget" "curl" "nmtui" "tmate" "tmux" "python3")
+bpkg=("htop" "neofetch" "gh" "git" "wget" "curl" "nmtui" "tmate" "tmux" "python3" "libgtk-3-lib" "cmake")
 
 #kernelpkg
-kpkg=("bc" "flex" "make" "clang")
+kpkg=("bc" "flex" "make" "clang" "build-essential")
 
 #colors
 red="\033[1;31m"
@@ -36,13 +36,23 @@ function yn () {
 function additional_tools () {
 	echo -e "$reset Install$blue Ollama$reset..."
 	curl -fsSL https://ollama.com/install.sh | sh
+	sleep 1;echo -e "\n\n\n"
 	echo -e "$reset Install$blue ZED$reset..."
 	curl -f https://zed.dev/install.sh | sh 
+	sleep 1;echo -e "\n\n\n"
 	echo -e "$reset Install$blue Ollama$reset..."
-		
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Installing $green Snap..."
+	pkgm snap
+	sleep 1;echo -e "\n\n\n"
+	echo -e "$reset Installing $green Flutter $reset..."
+	sudo snap install flutter --classic
+	bash -c flutter --disable-analytics
+	bash -c flutter precache
+	sudo snap install android-studio --classic
 
+	
 }
-
 
 
 
