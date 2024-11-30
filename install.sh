@@ -4,7 +4,7 @@
 
 
 #basic pkg
-bpkg=("htop" "neofetch" "gh" "git" "wget" "curl" "nmtui" "tmate" "tmux" "python3" "libgtk-3-lib" "cmake")
+bpkg=("lolcat" "htop" "neofetch" "gh" "git" "wget" "curl" "nmtui" "tmate" "tmux" "python3" "libgtk-3-lib" "cmake")
 
 #kernelpkg
 kpkg=("bc" "flex" "make" "clang" "build-essential")
